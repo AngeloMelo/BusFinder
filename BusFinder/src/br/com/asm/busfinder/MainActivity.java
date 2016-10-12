@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -27,7 +26,6 @@ public class MainActivity extends Activity {
 
 	private EditText etStreetName;
 	private Button btSearch;
-	private Button btMap;
 
 	private ListView lvResultRoutes;
 	private Manager manager;
@@ -52,7 +50,6 @@ public class MainActivity extends Activity {
 
         this.etStreetName = (EditText)findViewById(R.id.etStreetName);
         this.btSearch = (Button)findViewById(R.id.btSearch);
-        this.btMap = (Button)findViewById(R.id.btMap);
         
         this.lvResultRoutes = (ListView)findViewById(R.id.lvResultRoutes);        
         this.tvResultsTitle = (TextView)findViewById(R.id.tvResultsTitle);
@@ -78,17 +75,6 @@ public class MainActivity extends Activity {
 				searchRoutes();
 			}
 		});
-        
-        
-        this.btMap.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-
-				openMap();
-			}
-		});
-        
         
         this.tvResultsTitle.setVisibility(View.GONE);
         this.lvResultRoutes.setVisibility(View.GONE);
@@ -120,11 +106,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 
-				etStreetName.setText("");
-				
-				showRoteResults(new Route[0]);
-				etStreetName.requestFocus();
-				alertDialog.dismiss();
+				errorDialog.dismiss();
 			}
     	});	
 
@@ -152,19 +134,7 @@ public class MainActivity extends Activity {
     	return builder.create();
 	}
 
-
-	private void openMap() {
-
-    	String lat = "-27.592659";
-    	String lng = "-48.551342";
-    	String strUri = "http://maps.google.com/maps?q=loc:" + lat + "," + lng + " (" + "Label which you want" + ")";
-    	Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(strUri));
-    	intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-
-    	startActivity(intent);
-    }
-
-    
+	
     private AlertDialog createAlertDialog() { 
     	
     	AlertDialog.Builder builder = new AlertDialog.Builder(this); 
@@ -265,6 +235,5 @@ public class MainActivity extends Activity {
 	public void showErrorDialog() {
 		
 		this.errorDialog.show();
-		
 	}
 }

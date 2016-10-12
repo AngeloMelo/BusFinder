@@ -28,8 +28,15 @@ public class DetailsManager {
 		new DeparturesFinderTask().execute(routeId);		
 	}
 
+	/**
+	 * 
+	 * @author angelo
+	 * An AsyncTask for requesting in parallel the stops of a route
+	 */
 	private class StopsFinderTask extends AsyncTask<Integer, Void, String[]> {
 
+		private Exception error = null;
+		
 		@Override 
 		protected void onPreExecute() { 
 			
@@ -58,28 +65,39 @@ public class DetailsManager {
 			}
 			catch(Exception e){
 				
-				throw new RuntimeException(e);
+				this.error = e;
+				return null;
 				
 			}
 		}
 		
-		/**
-		 * TODO
-		 */
+
 		@Override 
 		protected void onPostExecute(String[] results) { 
 			
+			if(this.error != null){
+				
+				activityRef.showErrorDialog();
+				return;
+			}
+
 			if(results != null){ 
 
 				activityRef.showStopResults(results);
-				
 			} 
 		}		
 	}
 
 
+	/**
+	 * 
+	 * @author angelo
+	 * An AsyncTask for requesting in parallel the departures' schedule of a route
+	 */
 	private class DeparturesFinderTask extends AsyncTask<Integer, Void, String[]> {
 
+		private Exception error = null;
+		
 		@Override 
 		protected void onPreExecute() { 
 			
@@ -108,17 +126,21 @@ public class DetailsManager {
 			}
 			catch(Exception e){
 				
-				throw new RuntimeException(e);
-				
+				this.error = e;
+				return null;
 			}
 		}
 		
-		/**
-		 * TODO
-		 */
+		
 		@Override 
 		protected void onPostExecute(String[] results) { 
 			
+			if(this.error != null){
+				
+				activityRef.showErrorDialog();
+				return;
+			}
+
 			List<String> weekdayDeps = new ArrayList<String>();
 			List<String> saturdayDeps = new ArrayList<String>();
 			List<String> sundayDeps = new ArrayList<String>();
@@ -152,12 +174,11 @@ public class DetailsManager {
 					activityRef.showDepartureResults(weekdayDeps, saturdayDeps, sundayDeps);
 				
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
+					activityRef.showErrorDialog();
+					return;
 				}
-
 			} 
 		}		
 	}
-	
 }

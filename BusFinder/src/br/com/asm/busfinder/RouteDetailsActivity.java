@@ -3,7 +3,9 @@ package br.com.asm.busfinder;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +25,7 @@ public class RouteDetailsActivity extends Activity {
 	private ListView lvDepsWeekday;
 	private ListView lvDepsSaturday;
 	private ListView lvDepsSunday;
+	private AlertDialog errorDialog;
 	
 	private ProgressDialog dialog;
 	
@@ -62,6 +65,24 @@ public class RouteDetailsActivity extends Activity {
 			}
 		});
 		dialog = new ProgressDialog(RouteDetailsActivity.this); 
+		
+		this.errorDialog = createErrorDialog();
+	}
+	
+	private AlertDialog createErrorDialog() {
+
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this); 
+    	builder.setMessage(R.string.error_warning); 
+    	builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+				errorDialog.dismiss();
+			}
+    	});	
+
+    	return builder.create();
 	}
 	
 	
@@ -72,39 +93,17 @@ public class RouteDetailsActivity extends Activity {
 		
 		manager.findStopsByRouteId(routeId);
 		manager.findDeparturesByRouteId(routeId);
-		
 	}
 
+	
 	private void closeActivity() {
 		
 		finish();
 	}
 
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.route_details, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-
 	public void showProgressDialog() {
-	
-		dialog.show(); 
 		
+		dialog.show(); 
 	}
 
 
@@ -130,5 +129,32 @@ public class RouteDetailsActivity extends Activity {
 		this.lvDepsSunday.setAdapter(adapterSun); 
 		
 		dialog.dismiss();		
+	}
+
+
+	public void showErrorDialog() {
+		
+		this.errorDialog.show();
+	}
+	
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.route_details, menu);
+		return true;
+	}
+
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

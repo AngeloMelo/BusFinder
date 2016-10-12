@@ -35,9 +35,14 @@ public class Manager {
 		}
 	}
 
+	/**
+	 * 
+	 * @author angelo
+	 * An AsyncTask for requesting the routes search of the AppGlu API
+	 */
 	private class BusFinderTask extends AsyncTask<String, Void, String[]>
 	{
-		private Exception error;
+		private Exception error = null;
 		
 		@Override 
 		protected void onPreExecute() { 
@@ -73,9 +78,7 @@ public class Manager {
 			}
 		}
 		
-		/**
-		 * TODO
-		 */
+	
 		@Override 
 		protected void onPostExecute(String[] results) { 
 
@@ -118,11 +121,11 @@ public class Manager {
 						mainActivityRef.showRoteResults(routes);
 						
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						
+						mainActivityRef.showErrorDialog();
+						return;
 					}
 				}
-
 			} 
 		}		
 	}
