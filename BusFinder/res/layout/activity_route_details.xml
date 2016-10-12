@@ -1,0 +1,115 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvRouteName"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="@string/well_come" />
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+    	android:layout_height="190dp"
+    	android:orientation="vertical" >
+ 		
+        <TextView
+            android:id="@+id/tvStops"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stops" />
+        
+        <ListView
+            android:id="@+id/lvStops"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:headerDividersEnabled="true" >
+    
+        </ListView>
+    </LinearLayout>
+    <Space android:id="@+id/sp1"
+	        android:layout_width="match_parent"
+	        android:layout_height="20dp" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+    	android:layout_height="150dp"
+    	android:orientation="vertical" >
+ 		
+        <TextView
+            android:id="@+id/tvDepartures"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/departures" />
+        
+        <LinearLayout
+        	android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:orientation="horizontal" >
+    		
+            <LinearLayout
+		        android:layout_height="fill_parent"
+		        android:layout_width="110dp"
+		    	android:orientation="vertical" >
+		 		
+		        <TextView
+		            android:id="@+id/tvWeekday"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/weekday" />
+		        
+		        <ListView
+		            android:id="@+id/lvDepsWeekday"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content">    
+		        </ListView>
+		    </LinearLayout>
+		    
+            <LinearLayout
+		        android:layout_height="fill_parent"
+		        android:layout_width="110dp"
+		    	android:orientation="vertical" >
+		 		
+		        <TextView
+		            android:id="@+id/tvSaturday"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/saturday" />
+		        
+		        <ListView
+		            android:id="@+id/lvDepsSaturday"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content">    
+		        </ListView>
+		    </LinearLayout>
+		    
+            <LinearLayout
+		        android:layout_height="fill_parent"
+		        android:layout_width="110dp"
+		    	android:orientation="vertical" >
+		 		
+		        <TextView
+		            android:id="@+id/tvSunday"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/sunday" />
+		        
+		        <ListView
+		            android:id="@+id/lvDepsSunday"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content">    
+		        </ListView>
+		    </LinearLayout>
+		    
+    	</LinearLayout>
+        
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back" />
+
+</LinearLayout>

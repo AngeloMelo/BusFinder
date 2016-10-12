@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Bus Finder</string>
+    <string name="well_come">Well come to Bus Finder!</string>
+    <string name="search">Search routes</string>
+    <string name="street_name">Type the street name:</string>
+    <string name="results">Results:</string>
+    <string name="route_hint">street</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_route_details">Route Details</string>
+    <string name="hello_world">Hello world!</string>
+	<string name="back">Back</string>
+	<string name="stops">Stops:</string>
+	<string name="departures">Departures:</string>
+	<string name="weekday">Weekday:</string>
+	<string name="saturday">Saturday:</string>
+	<string name="sunday">Sunday:</string>
+	<string name="empty_key_warning">Please type a valid street name</string>
+	<string name="no_results_warning">No results found for this street</string>
+	<string name="error_warning">An error has occurred</string>
+	<string name="ok">Ok</string>
+	<string name="map">Map..</string>
+	
+</resources>
