@@ -109,7 +109,7 @@ public class RouteDetailsActivity extends Activity {
 
 	public void showStopResults(String[] stops) {
 		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, stops); 
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), R.layout.stops_list, stops); 
 		this.lvStops.setAdapter(adapter); 
 		
 		dialog.dismiss();	
@@ -119,13 +119,13 @@ public class RouteDetailsActivity extends Activity {
 
 	public void showDepartureResults(List<String> weekdayDeps, List<String> saturdayDeps, List<String> sundayDeps) {
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, weekdayDeps); 
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), R.layout.schedule_list, weekdayDeps); 
 		this.lvDepsWeekday.setAdapter(adapter); 
 		
-		ArrayAdapter<String> adapterSat = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, saturdayDeps); 
+		ArrayAdapter<String> adapterSat = new ArrayAdapter<String>(getBaseContext(), R.layout.schedule_list, saturdayDeps); 
 		this.lvDepsSaturday.setAdapter(adapterSat); 
 		
-		ArrayAdapter<String> adapterSun = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, sundayDeps); 
+		ArrayAdapter<String> adapterSun = new ArrayAdapter<String>(getBaseContext(), R.layout.schedule_list, sundayDeps); 
 		this.lvDepsSunday.setAdapter(adapterSun); 
 		
 		dialog.dismiss();		

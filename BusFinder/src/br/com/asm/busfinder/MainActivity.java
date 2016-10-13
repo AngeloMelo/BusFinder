@@ -234,6 +234,7 @@ public class MainActivity extends Activity {
 
 	public void showErrorDialog() {
 		
+		this.progressDialog.dismiss();
 		this.errorDialog.show();
 	}
 }
