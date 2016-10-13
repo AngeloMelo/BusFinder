@@ -8,6 +8,7 @@
         android:id="@+id/tvRouteName"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:textStyle="bold"
         android:text="@string/well_come" />
     
     <LinearLayout
@@ -19,13 +20,15 @@
             android:id="@+id/tvStops"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#252572"
             android:text="@string/stops" />
         
         <ListView
             android:id="@+id/lvStops"
-            android:layout_width="match_parent"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:headerDividersEnabled="true" >
+            android:fadeScrollbars="false"
+            android:headerDividersEnabled="true">
     
         </ListView>
     </LinearLayout>
@@ -41,6 +44,7 @@
             android:id="@+id/tvDepartures"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#252572"
             android:text="@string/departures" />
         
         <LinearLayout
@@ -50,7 +54,7 @@
     		
             <LinearLayout
 		        android:layout_height="fill_parent"
-		        android:layout_width="110dp"
+		        android:layout_width="100dp"
 		    	android:orientation="vertical" >
 		 		
 		        <TextView
@@ -61,14 +65,15 @@
 		        
 		        <ListView
 		            android:id="@+id/lvDepsWeekday"
-			        android:layout_width="match_parent"
+			        android:layout_width="70dp"
+			        android:fadeScrollbars="false"
 			        android:layout_height="wrap_content">    
 		        </ListView>
 		    </LinearLayout>
 		    
             <LinearLayout
 		        android:layout_height="fill_parent"
-		        android:layout_width="110dp"
+		        android:layout_width="100dp"
 		    	android:orientation="vertical" >
 		 		
 		        <TextView
@@ -79,14 +84,15 @@
 		        
 		        <ListView
 		            android:id="@+id/lvDepsSaturday"
-			        android:layout_width="match_parent"
+			        android:layout_width="70dp"
+			        android:fadeScrollbars="false"
 			        android:layout_height="wrap_content">    
 		        </ListView>
 		    </LinearLayout>
 		    
             <LinearLayout
 		        android:layout_height="fill_parent"
-		        android:layout_width="110dp"
+		        android:layout_width="100dp"
 		    	android:orientation="vertical" >
 		 		
 		        <TextView
@@ -97,7 +103,8 @@
 		        
 		        <ListView
 		            android:id="@+id/lvDepsSunday"
-			        android:layout_width="match_parent"
+			        android:layout_width="70dp"
+			        android:fadeScrollbars="false"
 			        android:layout_height="wrap_content">    
 		        </ListView>
 		    </LinearLayout>

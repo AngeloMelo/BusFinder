@@ -3,7 +3,9 @@ package br.com.asm.busfinder;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +16,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * class used to maintain the route details activity
+ * @author angelo
+ *
+ */
 public class RouteDetailsActivity extends Activity {
 	
 	private TextView tvRouteName;
@@ -23,6 +30,7 @@ public class RouteDetailsActivity extends Activity {
 	private ListView lvDepsWeekday;
 	private ListView lvDepsSaturday;
 	private ListView lvDepsSunday;
+	private AlertDialog errorDialog;
 	
 	private ProgressDialog dialog;
 	
@@ -37,7 +45,9 @@ public class RouteDetailsActivity extends Activity {
 		loadData();
 	}
 	
-	
+    /**
+     * Configures the UI fields and creates the dialogs used in RouteDetailsActivity
+     */
 	private void setUpUI() {
 					
 		Bundle b = getIntent().getExtras();
@@ -62,9 +72,34 @@ public class RouteDetailsActivity extends Activity {
 			}
 		});
 		dialog = new ProgressDialog(RouteDetailsActivity.this); 
+		
+		this.errorDialog = createErrorDialog();
 	}
 	
+	/**
+	 * creates an alertDialog to show an error message
+	 * @return
+	 */
+	private AlertDialog createErrorDialog() {
+
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this); 
+    	builder.setMessage(R.string.error_warning); 
+    	builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+				errorDialog.dismiss();
+			}
+    	});	
+
+    	return builder.create();
+	}
 	
+
+    /**
+     * Fires search procedures on manager to load the route details
+     */
 	private void loadData() {
 		
 		Bundle b = getIntent().getExtras();
@@ -72,14 +107,64 @@ public class RouteDetailsActivity extends Activity {
 		
 		manager.findStopsByRouteId(routeId);
 		manager.findDeparturesByRouteId(routeId);
-		
 	}
 
+	/**
+	 * Closes the details activity
+	 */
 	private void closeActivity() {
 		
 		finish();
 	}
 
+	/**
+	 * Shows the progress dialog while a request is performed
+	 */
+	public void showProgressDialog() {
+		
+		dialog.show(); 
+	}
+
+
+	/**
+	 * Populates the stops listView with a resulting stop list
+	 * @param routes
+	 */
+	public void showStopResults(String[] stops) {
+		
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), R.layout.stops_list, stops); 
+		this.lvStops.setAdapter(adapter); 
+		
+		dialog.dismiss();	
+	}
+
+
+	/**
+	 * Populates the each listView used to show the resulting timetable for a route
+	 * @param routes
+	 */
+	public void showDepartureResults(List<String> weekdayDeps, List<String> saturdayDeps, List<String> sundayDeps) {
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), R.layout.schedule_list, weekdayDeps); 
+		this.lvDepsWeekday.setAdapter(adapter); 
+		
+		ArrayAdapter<String> adapterSat = new ArrayAdapter<String>(getBaseContext(), R.layout.schedule_list, saturdayDeps); 
+		this.lvDepsSaturday.setAdapter(adapterSat); 
+		
+		ArrayAdapter<String> adapterSun = new ArrayAdapter<String>(getBaseContext(), R.layout.schedule_list, sundayDeps); 
+		this.lvDepsSunday.setAdapter(adapterSun); 
+		
+		dialog.dismiss();		
+	}
+
+	/**
+	 * Shows a message informing that an error occurred
+	 */
+	public void showErrorDialog() {
+		
+		this.errorDialog.show();
+	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -88,6 +173,7 @@ public class RouteDetailsActivity extends Activity {
 		return true;
 	}
 
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -98,37 +184,5 @@ public class RouteDetailsActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-
-	public void showProgressDialog() {
-	
-		dialog.show(); 
-		
-	}
-
-
-	public void showStopResults(String[] stops) {
-		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, stops); 
-		this.lvStops.setAdapter(adapter); 
-		
-		dialog.dismiss();	
-	}
-
-
-
-	public void showDepartureResults(List<String> weekdayDeps, List<String> saturdayDeps, List<String> sundayDeps) {
-
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, weekdayDeps); 
-		this.lvDepsWeekday.setAdapter(adapter); 
-		
-		ArrayAdapter<String> adapterSat = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, saturdayDeps); 
-		this.lvDepsSaturday.setAdapter(adapterSat); 
-		
-		ArrayAdapter<String> adapterSun = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, sundayDeps); 
-		this.lvDepsSunday.setAdapter(adapterSun); 
-		
-		dialog.dismiss();		
 	}
 }

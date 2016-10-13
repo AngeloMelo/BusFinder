@@ -12,7 +12,7 @@
     <string name="hello_world">Hello world!</string>
 	<string name="back">Back</string>
 	<string name="stops">Stops:</string>
-	<string name="departures">Departures:</string>
+	<string name="departures">Timetable</string>
 	<string name="weekday">Weekday:</string>
 	<string name="saturday">Saturday:</string>
 	<string name="sunday">Sunday:</string>

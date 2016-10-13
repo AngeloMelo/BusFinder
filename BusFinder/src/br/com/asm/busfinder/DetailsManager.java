@@ -9,6 +9,11 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 
+/**
+ * class used to perform operations to maintain the details activity
+ * @author angelo
+ *
+ */
 public class DetailsManager {
 
 	private RouteDetailsActivity activityRef;
@@ -18,18 +23,34 @@ public class DetailsManager {
 		this.activityRef = mainActivityRef;
 	}
 	
+	/**
+	 * Fires a StopsFinderTask to perform the search for stops in background
+	 * @param routeId
+	 */
 	public void findStopsByRouteId(int routeId)	{
 		
 		new StopsFinderTask().execute(routeId);
 	}
-		
+
+	/**
+	 * Fires a DeparturesFinderTask to perform the search of the routes' schedule in background
+	 * @param routeId
+	 */
+
 	public void findDeparturesByRouteId(int routeId) {
 
 		new DeparturesFinderTask().execute(routeId);		
 	}
 
+	/**
+	 * An AsyncTask for requesting the stops of a route in background
+	 * @author angelo
+	 * 
+	 */
 	private class StopsFinderTask extends AsyncTask<Integer, Void, String[]> {
 
+		private Exception error = null;
+		
 		@Override 
 		protected void onPreExecute() { 
 			
@@ -58,28 +79,39 @@ public class DetailsManager {
 			}
 			catch(Exception e){
 				
-				throw new RuntimeException(e);
+				this.error = e;
+				return null;
 				
 			}
 		}
 		
-		/**
-		 * TODO
-		 */
+
 		@Override 
 		protected void onPostExecute(String[] results) { 
 			
+			if(this.error != null){
+				
+				activityRef.showErrorDialog();
+				return;
+			}
+
 			if(results != null){ 
 
 				activityRef.showStopResults(results);
-				
 			} 
 		}		
 	}
 
 
+	/**
+	 * An AsyncTask for requesting the route's departure schedule in background 
+	 * @author angelo
+	 * 
+	 */
 	private class DeparturesFinderTask extends AsyncTask<Integer, Void, String[]> {
 
+		private Exception error = null;
+		
 		@Override 
 		protected void onPreExecute() { 
 			
@@ -108,17 +140,21 @@ public class DetailsManager {
 			}
 			catch(Exception e){
 				
-				throw new RuntimeException(e);
-				
+				this.error = e;
+				return null;
 			}
 		}
 		
-		/**
-		 * TODO
-		 */
+		
 		@Override 
 		protected void onPostExecute(String[] results) { 
 			
+			if(this.error != null){
+				
+				activityRef.showErrorDialog();
+				return;
+			}
+
 			List<String> weekdayDeps = new ArrayList<String>();
 			List<String> saturdayDeps = new ArrayList<String>();
 			List<String> sundayDeps = new ArrayList<String>();
@@ -152,12 +188,11 @@ public class DetailsManager {
 					activityRef.showDepartureResults(weekdayDeps, saturdayDeps, sundayDeps);
 				
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
+					activityRef.showErrorDialog();
+					return;
 				}
-
 			} 
 		}		
 	}
-	
 }

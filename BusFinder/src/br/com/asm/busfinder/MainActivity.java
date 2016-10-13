@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -23,11 +22,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * class used to maintain the search/listing routes activity
+ * @author angelo
+ *
+ */
 public class MainActivity extends Activity {
 
 	private EditText etStreetName;
 	private Button btSearch;
-	private Button btMap;
 
 	private ListView lvResultRoutes;
 	private Manager manager;
@@ -48,11 +51,13 @@ public class MainActivity extends Activity {
     }
     
 
+    /**
+     * Configures the UI fields and creates the dialogs used in MainActivity
+     */
     private void setUpUI() {
 
         this.etStreetName = (EditText)findViewById(R.id.etStreetName);
         this.btSearch = (Button)findViewById(R.id.btSearch);
-        this.btMap = (Button)findViewById(R.id.btMap);
         
         this.lvResultRoutes = (ListView)findViewById(R.id.lvResultRoutes);        
         this.tvResultsTitle = (TextView)findViewById(R.id.tvResultsTitle);
@@ -78,17 +83,6 @@ public class MainActivity extends Activity {
 				searchRoutes();
 			}
 		});
-        
-        
-        this.btMap.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-
-				openMap();
-			}
-		});
-        
         
         this.tvResultsTitle.setVisibility(View.GONE);
         this.lvResultRoutes.setVisibility(View.GONE);
@@ -120,11 +114,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 
-				etStreetName.setText("");
-				
-				showRoteResults(new Route[0]);
-				etStreetName.requestFocus();
-				alertDialog.dismiss();
+				errorDialog.dismiss();
 			}
     	});	
 
@@ -152,19 +142,7 @@ public class MainActivity extends Activity {
     	return builder.create();
 	}
 
-
-	private void openMap() {
-
-    	String lat = "-27.592659";
-    	String lng = "-48.551342";
-    	String strUri = "http://maps.google.com/maps?q=loc:" + lat + "," + lng + " (" + "Label which you want" + ")";
-    	Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(strUri));
-    	intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-
-    	startActivity(intent);
-    }
-
-    
+	
     private AlertDialog createAlertDialog() { 
     	
     	AlertDialog.Builder builder = new AlertDialog.Builder(this); 
@@ -188,6 +166,9 @@ public class MainActivity extends Activity {
     }
 
     
+    /**
+     * Code used to hide the keyboard after the user enters the route name
+     */
     private void hideSoftKeyboard() {
     	
         InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -195,6 +176,10 @@ public class MainActivity extends Activity {
     }
     
 	
+    /**
+     * Starts a new activity to show the selected route details
+     * @param position
+     */
     private void openDetailsActivity(int position) {
 		
 		Route route = (Route)lvResultRoutes.getAdapter().getItem(position);
@@ -203,10 +188,12 @@ public class MainActivity extends Activity {
 		intent.putExtra("routeId", route.getRouteId());
 		intent.putExtra("route", route.toString());
 		startActivity(intent);
-
 	}
 
 	
+    /**
+     * Fires the route search procedure on manager
+     */
 	private void searchRoutes() {
 		
 		String streetName = this.etStreetName.getText().toString();
@@ -236,24 +223,31 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-
+	/**
+	 * Shows the progress dialog while a request is performed
+	 */
 	public void showProgressDialog() {
 		
 		progressDialog.show(); 
-
 	}
 
 
+	/**
+	 * Populates the listView with a resulting route list
+	 * @param routes
+	 */
 	public void showRoteResults(Route[] routes) {
 		
 		ArrayAdapter<Route> adapter = new ArrayAdapter<Route>(getBaseContext(), android.R.layout.simple_list_item_1, routes); 
 		this.lvResultRoutes.setAdapter(adapter); 
 		
 		progressDialog.dismiss();
-		
 	}
 
 
+	/**
+	 * Shows a message informing that no routes were found for a street name
+	 */
 	public void showNoResultsDialog() {
 		
 		this.progressDialog.dismiss();
@@ -261,10 +255,12 @@ public class MainActivity extends Activity {
 		
 	}
 
-
+	/**
+	 * Shows a message informing that an error occurred
+	 */
 	public void showErrorDialog() {
 		
+		this.progressDialog.dismiss();
 		this.errorDialog.show();
-		
 	}
 }
