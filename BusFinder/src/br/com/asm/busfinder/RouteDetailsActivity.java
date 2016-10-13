@@ -16,6 +16,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * class used to maintain the route details activity
+ * @author angelo
+ *
+ */
 public class RouteDetailsActivity extends Activity {
 	
 	private TextView tvRouteName;
@@ -40,7 +45,9 @@ public class RouteDetailsActivity extends Activity {
 		loadData();
 	}
 	
-	
+    /**
+     * Configures the UI fields and creates the dialogs used in RouteDetailsActivity
+     */
 	private void setUpUI() {
 					
 		Bundle b = getIntent().getExtras();
@@ -69,6 +76,10 @@ public class RouteDetailsActivity extends Activity {
 		this.errorDialog = createErrorDialog();
 	}
 	
+	/**
+	 * creates an alertDialog to show an error message
+	 * @return
+	 */
 	private AlertDialog createErrorDialog() {
 
     	AlertDialog.Builder builder = new AlertDialog.Builder(this); 
@@ -85,7 +96,10 @@ public class RouteDetailsActivity extends Activity {
     	return builder.create();
 	}
 	
-	
+
+    /**
+     * Fires search procedures on manager to load the route details
+     */
 	private void loadData() {
 		
 		Bundle b = getIntent().getExtras();
@@ -95,18 +109,27 @@ public class RouteDetailsActivity extends Activity {
 		manager.findDeparturesByRouteId(routeId);
 	}
 
-	
+	/**
+	 * Closes the details activity
+	 */
 	private void closeActivity() {
 		
 		finish();
 	}
 
+	/**
+	 * Shows the progress dialog while a request is performed
+	 */
 	public void showProgressDialog() {
 		
 		dialog.show(); 
 	}
 
 
+	/**
+	 * Populates the stops listView with a resulting stop list
+	 * @param routes
+	 */
 	public void showStopResults(String[] stops) {
 		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), R.layout.stops_list, stops); 
@@ -116,7 +139,10 @@ public class RouteDetailsActivity extends Activity {
 	}
 
 
-
+	/**
+	 * Populates the each listView used to show the resulting timetable for a route
+	 * @param routes
+	 */
 	public void showDepartureResults(List<String> weekdayDeps, List<String> saturdayDeps, List<String> sundayDeps) {
 
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), R.layout.schedule_list, weekdayDeps); 
@@ -131,7 +157,9 @@ public class RouteDetailsActivity extends Activity {
 		dialog.dismiss();		
 	}
 
-
+	/**
+	 * Shows a message informing that an error occurred
+	 */
 	public void showErrorDialog() {
 		
 		this.errorDialog.show();

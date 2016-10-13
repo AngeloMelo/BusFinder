@@ -1,5 +1,10 @@
 package br.com.asm.busfinder;
 
+/**
+ * Class used to encapsulate routes details. Used to fill a listView
+ * @author angelo
+ *
+ */
 public class Route {
 
 	private String longName;

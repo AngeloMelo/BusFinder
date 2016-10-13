@@ -9,6 +9,11 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 
+/**
+ * class used to perform operations to maintain the details activity
+ * @author angelo
+ *
+ */
 public class DetailsManager {
 
 	private RouteDetailsActivity activityRef;
@@ -18,20 +23,29 @@ public class DetailsManager {
 		this.activityRef = mainActivityRef;
 	}
 	
+	/**
+	 * Fires a StopsFinderTask to perform the search for stops in background
+	 * @param routeId
+	 */
 	public void findStopsByRouteId(int routeId)	{
 		
 		new StopsFinderTask().execute(routeId);
 	}
-		
+
+	/**
+	 * Fires a DeparturesFinderTask to perform the search of the routes' schedule in background
+	 * @param routeId
+	 */
+
 	public void findDeparturesByRouteId(int routeId) {
 
 		new DeparturesFinderTask().execute(routeId);		
 	}
 
 	/**
-	 * 
+	 * An AsyncTask for requesting the stops of a route in background
 	 * @author angelo
-	 * An AsyncTask for requesting in parallel the stops of a route
+	 * 
 	 */
 	private class StopsFinderTask extends AsyncTask<Integer, Void, String[]> {
 
@@ -90,9 +104,9 @@ public class DetailsManager {
 
 
 	/**
-	 * 
+	 * An AsyncTask for requesting the route's departure schedule in background 
 	 * @author angelo
-	 * An AsyncTask for requesting in parallel the departures' schedule of a route
+	 * 
 	 */
 	private class DeparturesFinderTask extends AsyncTask<Integer, Void, String[]> {
 

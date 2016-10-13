@@ -7,6 +7,11 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
+/**
+ * class used to perform operations to maintain the main activity
+ * @author angelo
+ *
+ */
 public class Manager {
 
 	private MainActivity mainActivityRef;
@@ -16,6 +21,11 @@ public class Manager {
 		this.mainActivityRef = mainActivityRef;
 	}
 	
+	/**
+	 * Validates the user entry. 
+	 * Fires a BusFinderTask to perform the search for routes in background
+	 * @param routeId
+	 */
 	public void findRoutes(String streetName)
 	{
 		if(TextUtils.isEmpty(streetName))
@@ -38,7 +48,7 @@ public class Manager {
 	/**
 	 * 
 	 * @author angelo
-	 * An AsyncTask for requesting the routes search of the AppGlu API
+	 * An AsyncTask for requesting the AppGlu's search of routes   
 	 */
 	private class BusFinderTask extends AsyncTask<String, Void, String[]>
 	{
